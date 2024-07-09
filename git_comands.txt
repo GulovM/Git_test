@@ -1,0 +1,25 @@
+#Git branch
+Git branch can be explained as a timeline: if we want to change something in it,
+we create a new timeline that branches off from the main one, but it doesn't affect the main timeline.
+This way, we end up with two timelines that we can work on separately, and they don't influence each other.
+
+#Git push
+Git push is a command that allows you to send your branches or files to a remote repository, such as GitHub,
+where these branches/files can then be viewed by other developers.
+
+#Git pull
+Git pull is a command that allows you to synchronize branches from a remote repository, such as GitHub,
+with your local repository.
+
+#Training with comands
+touch test1.txt
+git status
+git add test1.txt
+git status
+--change test1.txt
+git commit -m "Comment"
+git checkout -b test1
+echo "hello world2" > test2.txt
+git status
+git add test2.txt
+git commit -m "First commit"
