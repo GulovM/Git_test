@@ -1,0 +1,42 @@
+sudo su - postgresql
+psql
+create database cometa1;
+create user muhsin with encrypted password '...';
+grant all privileges on database to muhsin;
+\c cometa1;
+CREATE TABLE employees (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    position VARCHAR(50),
+    salary NUMERIC
+);
+
+CREATE TABLE departments (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100)
+);
+
+CREATE TABLE projects (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    budget NUMERIC
+);
+INSERT INTO employees (name, position, salary) VALUES
+('Alice', 'Engineer', 70000),
+('Bob', 'Manager', 85000),
+('Charlie', 'Analyst', 60000);
+
+INSERT INTO departments (name) VALUES
+('Engineering'),
+('Management'),
+('Research');
+
+INSERT INTO projects (name, budget) VALUES
+('Project A', 150000),
+('Project B', 120000),
+('Project C', 90000);
+
+SELECT * FROM employees;
+SELECT * FROM departments;
+SELECT * FROM projects;
+
