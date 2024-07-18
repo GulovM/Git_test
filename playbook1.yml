@@ -1,10 +1,10 @@
 ---
 - name: Установка пакета nginx
-  hosts: ec2_servers
-  become: yes
-  tasks:
+  hosts: ec2_servers #Playbook будет выполнен для группы ec2_servers
+  become: yes #задачи будут выполняться с привилегиями суперпользователя.
+  tasks: #Начало списка задач.
     - name: Убедиться, что Nginx установлен
-      apt:
-        name: nginx
-        state: present
+      apt: #Модуль Ansible для управления пакетами
+        name: nginx #Указывает, что задача будет работать с пакетом nginx
+        state: present #Указывает, что пакет должен быть установлен (если он еще не установлен)
 
