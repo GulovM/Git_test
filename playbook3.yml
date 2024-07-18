@@ -3,29 +3,33 @@
   hosts: ec2_servers
   become: yes
   tasks:
+    # Эта задача устанавливает PostgreSQL и дополнительные пакеты
     - name: Установка СУБД PostgreSQL и дополнительных пакетов
       apt:
-        name: "{{ item }}"
-        state: present
-      with_items:
-        - postgresql
-        - postgresql-contrib
+        name: "{{ item }}"  # Переменная, содержащая список пакетов для установки
+        state: present  # Указывает, что пакеты должны быть установлены (если они еще не установлены)
+      with_items:  # Перечисление пакетов для установки
+        - postgresql  # Основной пакет PostgreSQL
+        - postgresql-contrib  # Дополнительные утилиты и расширения для PostgreSQL
 
+    # Эта задача проверяет, что PostgreSQL запущен и включен при загрузке системы
     - name: Убедиться, что PostgreSQL запущен и включен
       systemd:
-        name: postgresql
-        state: started
-        enabled: yes
+        name: postgresql  # Указывает службу PostgreSQL
+        state: started  # Указывает, что служба должна быть запущена
+        enabled: yes  # Указывает, что служба должна быть включена при загрузке системы
 
+    # Эта задача создает новую базу данных 'oscar_db'
     - name: Создать базу данных
       shell: >
-        sudo -u postgres psql -c "CREATE DATABASE oscar_db;"
+        sudo -u postgres psql -c "CREATE DATABASE oscar_db;"  # Команда для создания базы данных от имени пользователя postgres
 
+    # Эта задача создает нового пользователя 'oscar' с заданным паролем
     - name: Создать пользователя
       shell: >
-        sudo -u postgres psql -c "CREATE USER oscar WITH PASSWORD 'your_password';"
+        sudo -u postgres psql -c "CREATE USER oscar WITH PASSWORD 'your_password';"  # Команда для создания пользователя от имени postgres
 
+    # Эта задача дает пользователю 'oscar' все привилегии на базе данных 'oscar_db'
     - name: Дать пользователю oscar все привилегии на базе данных oscar_db
       shell: >
-        sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE oscar_db TO oscar;"
-
+        sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE oscar_db TO oscar;"  # Команда для назначения всех привилегий пользователю на базе данных
