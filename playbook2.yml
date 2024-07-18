@@ -3,21 +3,24 @@
   hosts: ec2_servers
   become: yes
   tasks:
+    # Эта задача проверяет, установлен ли Nginx, обновляет кеш пакетов и устанавливает Nginx, если он не установлен
     - name: Убедиться, что Nginx установлен
       apt:
-        name: nginx
-        state: present
-        update_cache: yes
+        name: nginx  # Указывает пакет nginx
+        state: present  # Указывает, что пакет должен быть установлен (если он еще не установлен)
+        update_cache: yes  # Обновляет кеш пакетов перед установкой
 
+    # Эта задача копирует HTML-страницу с локальной машины на сервер в каталог веб-сервера
     - name: Скопировать HTML-страницу в каталог веб-сервера
       copy:
-        src: /home/ubuntu/cmt/test.html
-        dest: /var/www/html/test.html
-        owner: www-data
-        group: www-data
-        mode: '0644'
+        src: /home/ubuntu/cmt/test.html  # Путь к исходному файлу HTML на главной машине
+        dest: /var/www/html/test.html  # Путь к назначению файла HTML на сервере
+        owner: www-data  # Указывает владельца файла на сервере
+        group: www-data  # Указывает группу владельца файла на сервере
+        mode: '0644'  # Устанавливает права доступа к файлу (чтение и запись для владельца, чтение для группы и остальных)
 
+    # Эта задача перезапускает службу Nginx для применения изменений
     - name: Перезапустить Nginx
       systemd:
-        name: nginx
-        state: restarted
+        name: nginx  # Указывает службу nginx
+        state: restarted  # Перезапускает службу
