@@ -1,0 +1,10 @@
+---
+- name: Установка пакета nginx
+  hosts: ec2_servers
+  become: yes
+  tasks:
+    - name: Убедиться, что Nginx установлен
+      apt:
+        name: nginx
+        state: present
+

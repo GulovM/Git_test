@@ -1,0 +1,23 @@
+---
+- name: Развертывание HTML-страницы на веб-сервере
+  hosts: ec2_servers
+  become: yes
+  tasks:
+    - name: Убедиться, что Nginx установлен
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+
+    - name: Скопировать HTML-страницу в каталог веб-сервера
+      copy:
+        src: /home/ubuntu/cmt/test.html
+        dest: /var/www/html/test.html
+        owner: www-data
+        group: www-data
+        mode: '0644'
+
+    - name: Перезапустить Nginx
+      systemd:
+        name: nginx
+        state: restarted
